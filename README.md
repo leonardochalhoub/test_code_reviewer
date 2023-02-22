@@ -87,3 +87,33 @@
     
     9. What is the median time between user registration and first purchase? Give the answer
     in seconds (!) As an integer.
+    
+- **Task 3. Answering student questions**
+    
+    How would you answer the student's question below? Your task is to get your message across in such a way that a beginner can understand your explanation. You can do this any way you want (pictures, GIFs, metaphors, anything) so long as it makes your explanation clear. Indicate how much time you spent completing this task.
+    
+    > **What is the difference between DataFrame and Series?**
+
+- **Task 4.**
+
+    You are given two random variables X and Y.
+
+    E(X) = 0.5, Var(X) = 2
+
+    E(Y) = 7, Var(Y) = 3.5
+
+    cov (X, Y) = -0.8
+
+    Find the variance of the random variable Z = 2X - 3Y
+    
+- **Task 5.**
+    
+    Omer trained a linear regression model and tested its performance on a test sample of 500 objects. On 400 of those, the model returned a prediction higher than expected by 0.5, and on the remaining 100, the model returned a prediction lower than expected by 0.7.
+    
+    What is the MSE for his model?
+    
+    Limor claims that the linear regression model wasn't trained correctly, and we can do improve it by changing all the answers by a constant value. What will be her MSE?
+    
+    You can assume that Limor found the smallest error under her constraints.
+    
+    **Return two values - Omer's and Limor's MSE.**

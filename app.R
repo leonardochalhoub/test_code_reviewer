@@ -281,4 +281,116 @@ total_df <- events_df |>
 
 sprintf('The median time between user registration and first purchase is %s seconds.',
         total_df$median_diff[1])
-                
+
+# - **Task 3. Answering student questions**
+#   
+# How would you answer the student's question below?
+# Your task is to get your message across in such a way 
+# that a beginner can understand your explanation.
+# You can do this any way you want (pictures, GIFs, metaphors, anything) so long as it makes your explanation clear. Indicate how much time you spent completing this task.
+
+# Best answer I found:
+#   https://www.includehelp.com/python/what-is-the-difference-between-a-pandas-series-and-a-dataframe.aspx
+
+# "Both DataFrame and series are the two main data structure of pandas library.
+# Series in pandas contains a single list which can store heterogeneous type of data, because of this,
+# series is also considered as a 1-dimensional data structure.
+# 
+# On the other hand, DataFrame is a 2-dimensional data structure which contains multiple lists
+# of heterogeneous type of data. DataFrame can contain multiple series or it can be considered as 
+# a collection of series.
+# 
+# When we analyse a series, each value can be considered as a separate row of a single column, whereas when 
+# we analyse a DataFrame, we have multiple columns and multiple rows."
+
+
+# - **Task 4.**
+
+# You are given two random variables X and Y.
+# 
+# E(X) = 0.5, Var(X) = 2
+# 
+# E(Y) = 7, Var(Y) = 3.5
+# 
+# cov (X, Y) = -0.8
+# 
+# Find the variance of the random variable Z = 2X - 3Y
+
+# "Answer from ChatGPT
+# We can start by using the properties of variances and covariances:
+#   
+#   Var(Z) = Var(2X - 3Y)
+# 
+# = Var(2X) + Var(-3Y) - 2Cov(2X, -3Y)
+# 
+# = 4Var(X) + 9Var(Y) - 12Cov(X,Y)
+# 
+# = 4(2) + 9(3.5) - 12(-0.8) (using the given values for X and Y)
+# 
+# = 8 + 31.5 + 9.6
+# 
+# = 49.1
+# 
+# Therefore, the variance of the random variable Z is 49.1."
+
+
+# - **Task 5.**
+#   
+# Omer trained a linear regression model and tested its performance on a test sample of 500 objects. On 400 of those, 
+# the model returned a prediction higher than expected by 0.5, and on the remaining 100, the model returned 
+# a prediction lower than expected by 0.7.
+# What is the MSE for his model?
+#   
+# Limor claims that the linear regression model wasn't trained correctly, and we can do improve it by changing all 
+# the answers by a constant value. What will be her MSE?
+# You can assume that Limor found the smallest error under her constraints.
+# **Return two values - Omer's and Limor's MSE.**
+
+# Answer from ChatGPT
+
+# To calculate the mean squared error (MSE) for Omer's linear regression model, we need to first calculate the errors 
+# for each prediction. The error for each prediction is the difference between the predicted value and the true value.
+# 
+# For the 400 objects where the model returned a prediction higher than expected by 0.5, the error is 0.5.
+# For the 100 objects where the model returned a prediction lower than expected by 0.7, the error is -0.7.
+# 
+# The MSE is calculated as the average of the squared errors. So we first square each of the errors and then
+# take the average:
+# 
+# MSE = (1/n) * ∑(y_i - yhat_i)^2
+# 
+# where n is the number of observations, y_i is the true value for the i-th observation, 
+# and yhat_i is the predicted value for the i-th observation.
+# 
+# In this case, n = 500, and we have 400 observations with an error of 0.5 and 100 observations with an error 
+# of -0.7. Let's assume that the expected value for all the observations is the same (we don't know what it is, but we don't need it for the calculation of the MSE).
+# 
+# Then, the MSE is:
+#   
+#   MSE = (1/500) * [400*(0.5^2) + 100*(-0.7)^2]
+# 
+# = (1/500) * [4000.25 + 1000.49]
+# 
+# = 0.197
+# 
+# Therefore, the MSE for Omer's linear regression model is 0.197.
+
+# If Limor claims that the linear regression model wasn't trained correctly, and that we can improve it by 
+# changing all the answers by a constant value, this means that she is proposing to add a constant value 
+# to all the predicted values.
+# 
+# Let's say that the original predicted values are yhat_i and the corrected predicted values are yhat_i_new.
+# Then, Limor's proposal is:
+# 
+# yhat_i_new = yhat_i + c
+# 
+# where c is the constant value that she proposes to add.
+# 
+# Adding a constant value to all the predicted values will not change the MSE, because the errors
+# (the differences between the predicted values and the true values) will remain the same.
+# 
+# In other words, the MSE is calculated based on the squared errors, which are the differences
+# between the predicted values and the true values, squared. Adding a constant value to all the predicted values will not change these differences, because the same constant value will be added to both the predicted and the true values. Therefore, the squared differences will remain the same, and so will the MSE.
+# 
+# So, if Limor's proposal does not change the MSE, the MSE will remain the same as before, which is 0.197, 
+# as we calculated in the previous answer.
