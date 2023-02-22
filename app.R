@@ -201,8 +201,7 @@ events_df <- events_df |>
 
 summary_3 <- events_df |> 
   dplyr::group_by(reg_week, lifetime) |> 
-  dplyr::summarise(n_distinct = dplyr::n_distinct(user_id)
-  )
+  dplyr::summarise(n_distinct = dplyr::n_distinct(user_id))
 
 # a Retention Rate is asked, so I will use the lifetime == 0 as reference to new users
 # the rate will be calculated by lifetime > 0 / initial value
@@ -214,8 +213,12 @@ base_user_count <- summary_3 |>
 summary_3 <- summary_3 |> 
   dplyr::left_join(base_user_count, by = c('reg_week')) |> 
   dplyr::ungroup() |> 
-  dplyr::mutate(retentionRate = scales::percent(n_distinct / n_user_begin, accuracy = 0.01))
+  dplyr::mutate(retentionRate = scales::percent(n_distinct / n_user_begin, accuracy = 0.01)) |> 
+  dplyr::select(1, 2, 5) |> 
+  tidyr::pivot_wider(names_from = reg_week,
+                     values_from = retentionRate)
 
+print(summary_3)
 
 # 6. What is the 3 week retention rate for a cohort with ID 32? Give the answer in percent,
 # rounded to 2 decimal places, inclusive.
@@ -227,4 +230,55 @@ answer_6 <- summary_3 |>
 
 sprintf('The 3 week retention rate for cohort ID == 32 is %s.',
         answer_6)
-        
+
+# 7. Build a summary table of changes in the indicator ARPPU (Average Revenue Per Paying
+# User) for cohorts depending on lifetime.
+
+totalPurchases <- events_df |> 
+  dplyr::filter(event_type %in% c('purchase')) |> 
+  dplyr::group_by(reg_week, lifetime) |> 
+  dplyr::summarise(sum_purchases = sum(purchase_amount, na.rm = TRUE)) |> 
+  dplyr::ungroup()
+
+summary_4 <- summary_3 |> 
+  dplyr::left_join(totalPurchases, by = c('reg_week', 'lifetime')) |> 
+  dplyr::mutate(ARPPU = sum_purchases / n_distinct) |> 
+  dplyr::select(1, 2, 7) |> 
+  tidyr::pivot_wider(names_from = reg_week,
+                     values_from = ARPPU)
+
+print(summary_4)
+
+# 8. What is the 3-week ARPPU of a cohort with ID 31? Give the answer with a floating point
+# number, rounded to 2 decimal places, inclusive.
+
+sprintf('The 3-week ARPPU of cohort ID == 31 is %s.',
+        round(summary_4$`31`[4], 2))
+  
+# 9. What is the median time between user registration and first purchase? Give the answer
+# in seconds (!) As an integer.     
+
+reg_df <- events_df |> 
+  dplyr::filter(event_type %in% c('registration')) |> 
+  dplyr::rename('reg_date' = event_date)
+
+purchase_df <- events_df |>
+  dplyr::filter(event_type %in% c('purchase')) |> 
+  dplyr::rename('purchase_date' = event_date) |>
+  dplyr::arrange(purchase_date) |> 
+  dplyr::group_by(user_id) |> 
+  dplyr::slice_head(n = 1)
+
+total_df <- events_df |> 
+  dplyr::left_join(reg_df |> 
+                     dplyr::select(1, 2),
+                   by = c('user_id')) |> 
+  dplyr::left_join(purchase_df |> 
+                     dplyr::select(1, 2),
+                   by = c('user_id')) |> 
+  dplyr::mutate(diff_secs = as.double(difftime(purchase_date, reg_date, units='secs')),
+                median_diff = median(diff_secs, na.rm = TRUE))
+
+sprintf('The median time between user registration and first purchase is %s seconds.',
+        total_df$median_diff[1])
+                
